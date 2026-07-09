@@ -7,13 +7,14 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="bg"></div>
+  <video class="bg" autoplay muted loop playsinline>
+    <source src="images/background.mp4" type="video/mp4">
+  </video>
   
   <div class="rec">
     <span class="rec-dot"></span>
     <span class="rec-text">REC</span>
   </div>
-
   <div class="camera-frame-left">
     <img src="images/camera-frame-left.svg" alt="">
   </div>
@@ -29,7 +30,6 @@
   <div class="battery">
     <img src="images/battery.png" alt="">
   </div>
-
   <div class="content">
     <div class="header">
       <div class="logo">
@@ -43,7 +43,6 @@
         <a href="#">Archive</a>
       </nav>
     </div>
-
     <div class="gallery">
       <button class="arrow left">&#60;</button>
       <div class="gallery-viewport">
@@ -59,7 +58,6 @@
   const folder = 'featured';
   let page = 0;
   let totalPages = 0;
-
   fetch(`https://res.cloudinary.com/${cloudName}/image/list/${folder}.json`)
     .then(res => res.json())
     .then(data => {
@@ -68,7 +66,6 @@
         a.public_id.localeCompare(b.public_id, undefined, { numeric: true })
       );
       const perPage = 10;
-
       for (let i = 0; i < images.length; i += perPage) {
         const galleryPage = document.createElement('div');
         galleryPage.className = 'gallery-page';
@@ -80,26 +77,22 @@
         });
         track.appendChild(galleryPage);
       }
-
       totalPages = Math.ceil(images.length / perPage);
-
       document.querySelector('.arrow.left').addEventListener('click', () => {
         if (page > 0) page--;
         track.style.transform = `translateX(-${page * 100}%)`;
       });
-
       document.querySelector('.arrow.right').addEventListener('click', () => {
         if (page < totalPages - 1) page++;
         track.style.transform = `translateX(-${page * 100}%)`;
       });
     });
-	
+
   const words = ['REC', 'DEATH', 'VOID', 'DECAY', 'ROT', 'PAIN', 'DARK', 'FEAR', 'SORROW', 'ANGUISH', 'MOURN', 'SUFFER'];
   let i = 0;
   let blinks = 0;
   const recText = document.querySelector('.rec-text');
   const recDot = document.querySelector('.rec-dot');
-
   setInterval(() => {
     recDot.style.opacity = recDot.style.opacity === '0' ? '1' : '0';
     blinks++;
@@ -120,7 +113,6 @@
     document.querySelector('.timestamp-time').textContent = `${ampm} ${h}:${minutes}:${seconds}`;
     document.querySelector('.timestamp-date').textContent = date;
   }
-
   updateTimestamp();
   setInterval(updateTimestamp, 1000);
 </script>
