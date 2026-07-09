@@ -57,6 +57,9 @@
 <script>
   const cloudName = 'ycvrsako';
   const folder = 'featured';
+  const images = data.resources.sort((a, b) => 
+  a.public_id.localeCompare(b.public_id, undefined, { numeric: true })
+);
   let page = 0;
   let totalPages = 0;
 
