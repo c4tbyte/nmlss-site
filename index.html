@@ -57,9 +57,6 @@
 <script>
   const cloudName = 'ycvrsako';
   const folder = 'featured';
-  const images = data.resources.sort((a, b) => 
-  a.public_id.localeCompare(b.public_id, undefined, { numeric: true })
-);
   let page = 0;
   let totalPages = 0;
 
@@ -67,7 +64,9 @@
     .then(res => res.json())
     .then(data => {
       const track = document.getElementById('galleryTrack');
-      const images = data.resources;
+      const images = data.resources.sort((a, b) =>
+        a.public_id.localeCompare(b.public_id, undefined, { numeric: true })
+      );
       const perPage = 10;
 
       for (let i = 0; i < images.length; i += perPage) {
@@ -94,7 +93,7 @@
         track.style.transform = `translateX(-${page * 100}%)`;
       });
     });
-
+	
   const words = ['REC', 'DEATH', 'VOID', 'DECAY', 'ROT', 'PAIN', 'DARK', 'FEAR', 'SORROW', 'ANGUISH', 'MOURN', 'SUFFER'];
   let i = 0;
   let blinks = 0;
