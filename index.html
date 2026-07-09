@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NMLSS</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="bg"></div>
+  
+  <div class="rec">
+    <span class="rec-dot"></span>
+    <span class="rec-text">REC</span>
+  </div>
+
+  <div class="camera-frame-left">
+    <img src="images/camera-frame-left.svg" alt="">
+  </div>
+  <div class="camera-frame-right">
+    <img src="images/camera-frame-right.svg" alt="">
+  </div>
+  
+  <div class="timestamp">
+    <span class="timestamp-time"></span>
+    <span class="timestamp-date"></span>
+  </div>
+  
+  <div class="battery">
+    <img src="images/battery.png" alt="">
+  </div>
+
+<div class="content">
+  <div class="header">
+    <div class="logo">
+      <img src="images/logo.gif" alt="NMLSS">
+    </div>
+    <nav>
+      <a href="#">Home</a>
+	  <a href="#">Shop</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+      <a href="#">Archive</a>
+    </nav>
+  </div>
+
+  <div class="gallery">
+    <button class="arrow left">&#60;</button>
+    <div class="gallery-viewport">
+      <div class="gallery-track">
+        <div class="gallery-page">
+          <div class="gallery-item"><img src="images/photos/1.png" alt=""></div>
+          <div class="gallery-item"><img src="images/photos/2.jpg" alt=""></div>
+          <div class="gallery-item"><img src="images/photos/3.jpg" alt=""></div>
+          <div class="gallery-item"><img src="images/photos/4.png" alt=""></div>
+          <div class="gallery-item"><img src="images/photos/5.jpg" alt=""></div>
+          <div class="gallery-item"><img src="images/photos/6.png" alt=""></div>
+          <div class="gallery-item"><img src="images/photos/7.png" alt=""></div>
+          <div class="gallery-item"><img src="images/photos/8.png" alt=""></div>
+		  <div class="gallery-item"><img src="images/photos/9.jpeg" alt=""></div>
+          <div class="gallery-item"><img src="images/photos/10.jpeg" alt=""></div>
+        </div>
+        <div class="gallery-page">
+          <div class="gallery-item"><img src="images/photos/9.jpeg" alt=""></div>
+          <div class="gallery-item"><img src="images/photos/10.jpeg" alt=""></div>
+          <div class="gallery-item"><img src="images/photos/11.jpg" alt=""></div>
+          <div class="gallery-item"><img src="images/photos/12.jpg" alt=""></div>
+          <div class="gallery-item"><img src="images/photos/13.jpeg" alt=""></div>
+          <div class="gallery-item"><img src="images/photos/14.jpeg" alt=""></div>
+          <div class="gallery-item"><img src="images/photos/15.jpg" alt=""></div>
+          <div class="gallery-item"><img src="images/photos/16.jpeg" alt=""></div>
+        </div>
+      </div>
+    </div>
+    <button class="arrow right">&#62;</button>
+  </div>
+  <a href="archive.html" class="view-more">View More...</a>
+</div>
+
+
+<script>
+  const track = document.querySelector('.gallery-track');
+  let page = 0;
+  const totalPages = document.querySelectorAll('.gallery-page').length;
+
+  document.querySelector('.arrow.left').addEventListener('click', () => {
+    if (page > 0) page--;
+    track.style.transform = `translateX(-${page * 100}%)`;
+  });
+
+  document.querySelector('.arrow.right').addEventListener('click', () => {
+    if (page < totalPages - 1) page++;
+    track.style.transform = `translateX(-${page * 100}%)`;
+  });
+  
+ const words = ['REC', 'DEATH', 'VOID', 'DECAY', 'ROT', 'PAIN', 'DARK', 'FEAR', 'SORROW', 'ANGUISH', 'MOURN', 'SUFFER'];
+	let i = 0;
+	let blinks = 0;
+	const recText = document.querySelector('.rec-text');
+	const recDot = document.querySelector('.rec-dot');
+
+	setInterval(() => {
+	  recDot.style.opacity = recDot.style.opacity === '0' ? '1' : '0';
+	  blinks++;
+  if (blinks % 4 === 0) {
+    i = (i + 1) % words.length;
+    recText.textContent = words[i];
+	}
+  }, 600);
+  
+function updateTimestamp() {
+  const now = new Date();
+  const hours = now.getHours();
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  const seconds = String(now.getSeconds()).padStart(2, '0');
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  const h = String(hours % 12 || 12).padStart(2, '0');
+  const date = `${now.getMonth() + 1}/${now.getDate()}/${now.getFullYear()}`;
+  document.querySelector('.timestamp-time').textContent = `${ampm} ${h}:${minutes}:${seconds}`;
+  document.querySelector('.timestamp-date').textContent = date;
+}
+
+updateTimestamp();
+setInterval(updateTimestamp, 1000);
+</script>
+</body>
+</html>
