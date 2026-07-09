@@ -16,7 +16,8 @@ html, body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  z-index: -1;
+  transform: scale(0.95);
+  z-index: 0;
 }
 
 .camera-frame-left,
@@ -107,7 +108,6 @@ nav a:hover {
   width: 80%;
   flex: 1;
   min-height: 0;
-  opacity: 0.9;
 }
 
 .gallery-viewport {
@@ -166,7 +166,7 @@ nav a:hover {
 .view-more {
   font-family: 'VT323', monospace;
   font-size: 1.9vw;
-  color: #fff;
+  color: red;
   text-decoration: none;
   letter-spacing: 0.15em;
   text-transform: uppercase;
