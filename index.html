@@ -30,98 +30,97 @@
     <img src="images/battery.png" alt="">
   </div>
 
-<div class="content">
-  <div class="header">
-    <div class="logo">
-      <img src="images/logo.gif" alt="NMLSS">
-    </div>
-    <nav>
-      <a href="#">Home</a>
-	  <a href="#">Shop</a>
-      <a href="#">About</a>
-      <a href="#">Contact</a>
-      <a href="#">Archive</a>
-    </nav>
-  </div>
-
-  <div class="gallery">
-    <button class="arrow left">&#60;</button>
-    <div class="gallery-viewport">
-      <div class="gallery-track">
-        <div class="gallery-page">
-          <div class="gallery-item"><img src="images/photos/1.png" alt=""></div>
-          <div class="gallery-item"><img src="images/photos/2.jpg" alt=""></div>
-          <div class="gallery-item"><img src="images/photos/3.jpg" alt=""></div>
-          <div class="gallery-item"><img src="images/photos/4.png" alt=""></div>
-          <div class="gallery-item"><img src="images/photos/5.jpg" alt=""></div>
-          <div class="gallery-item"><img src="images/photos/6.png" alt=""></div>
-          <div class="gallery-item"><img src="images/photos/7.png" alt=""></div>
-          <div class="gallery-item"><img src="images/photos/8.png" alt=""></div>
-		  <div class="gallery-item"><img src="images/photos/9.jpeg" alt=""></div>
-          <div class="gallery-item"><img src="images/photos/10.jpeg" alt=""></div>
-        </div>
-        <div class="gallery-page">
-          <div class="gallery-item"><img src="images/photos/9.jpeg" alt=""></div>
-          <div class="gallery-item"><img src="images/photos/10.jpeg" alt=""></div>
-          <div class="gallery-item"><img src="images/photos/11.jpg" alt=""></div>
-          <div class="gallery-item"><img src="images/photos/12.jpg" alt=""></div>
-          <div class="gallery-item"><img src="images/photos/13.jpeg" alt=""></div>
-          <div class="gallery-item"><img src="images/photos/14.jpeg" alt=""></div>
-          <div class="gallery-item"><img src="images/photos/15.jpg" alt=""></div>
-          <div class="gallery-item"><img src="images/photos/16.jpeg" alt=""></div>
-        </div>
+  <div class="content">
+    <div class="header">
+      <div class="logo">
+        <img src="images/logo.gif" alt="NMLSS">
       </div>
+      <nav>
+        <a href="#">Home</a>
+        <a href="#">Shop</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+        <a href="#">Archive</a>
+      </nav>
     </div>
-    <button class="arrow right">&#62;</button>
-  </div>
-  <a href="archive.html" class="view-more">View More...</a>
-</div>
 
+    <div class="gallery">
+      <button class="arrow left">&#60;</button>
+      <div class="gallery-viewport">
+        <div class="gallery-track" id="galleryTrack"></div>
+      </div>
+      <button class="arrow right">&#62;</button>
+    </div>
+    <a href="archive.html" class="view-more">View More...</a>
+  </div>
 
 <script>
-  const track = document.querySelector('.gallery-track');
+  const cloudName = 'ycvrsako';
+  const folder = 'nmlss/photos';
   let page = 0;
-  const totalPages = document.querySelectorAll('.gallery-page').length;
+  let totalPages = 0;
 
-  document.querySelector('.arrow.left').addEventListener('click', () => {
-    if (page > 0) page--;
-    track.style.transform = `translateX(-${page * 100}%)`;
-  });
+  fetch(`https://res.cloudinary.com/${cloudName}/image/list/${folder}.json`)
+    .then(res => res.json())
+    .then(data => {
+      const track = document.getElementById('galleryTrack');
+      const images = data.resources;
+      const perPage = 10;
 
-  document.querySelector('.arrow.right').addEventListener('click', () => {
-    if (page < totalPages - 1) page++;
-    track.style.transform = `translateX(-${page * 100}%)`;
-  });
-  
- const words = ['REC', 'DEATH', 'VOID', 'DECAY', 'ROT', 'PAIN', 'DARK', 'FEAR', 'SORROW', 'ANGUISH', 'MOURN', 'SUFFER'];
-	let i = 0;
-	let blinks = 0;
-	const recText = document.querySelector('.rec-text');
-	const recDot = document.querySelector('.rec-dot');
+      for (let i = 0; i < images.length; i += perPage) {
+        const galleryPage = document.createElement('div');
+        galleryPage.className = 'gallery-page';
+        images.slice(i, i + perPage).forEach(img => {
+          galleryPage.innerHTML += `
+            <div class="gallery-item">
+              <img src="https://res.cloudinary.com/${cloudName}/image/upload/${img.public_id}" alt="">
+            </div>`;
+        });
+        track.appendChild(galleryPage);
+      }
 
-	setInterval(() => {
-	  recDot.style.opacity = recDot.style.opacity === '0' ? '1' : '0';
-	  blinks++;
-  if (blinks % 4 === 0) {
-    i = (i + 1) % words.length;
-    recText.textContent = words[i];
-	}
+      totalPages = Math.ceil(images.length / perPage);
+
+      document.querySelector('.arrow.left').addEventListener('click', () => {
+        if (page > 0) page--;
+        track.style.transform = `translateX(-${page * 100}%)`;
+      });
+
+      document.querySelector('.arrow.right').addEventListener('click', () => {
+        if (page < totalPages - 1) page++;
+        track.style.transform = `translateX(-${page * 100}%)`;
+      });
+    });
+
+  const words = ['REC', 'DEATH', 'VOID', 'DECAY', 'ROT', 'PAIN', 'DARK', 'FEAR', 'SORROW', 'ANGUISH', 'MOURN', 'SUFFER'];
+  let i = 0;
+  let blinks = 0;
+  const recText = document.querySelector('.rec-text');
+  const recDot = document.querySelector('.rec-dot');
+
+  setInterval(() => {
+    recDot.style.opacity = recDot.style.opacity === '0' ? '1' : '0';
+    blinks++;
+    if (blinks % 4 === 0) {
+      i = (i + 1) % words.length;
+      recText.textContent = words[i];
+    }
   }, 600);
-  
-function updateTimestamp() {
-  const now = new Date();
-  const hours = now.getHours();
-  const minutes = String(now.getMinutes()).padStart(2, '0');
-  const seconds = String(now.getSeconds()).padStart(2, '0');
-  const ampm = hours >= 12 ? 'PM' : 'AM';
-  const h = String(hours % 12 || 12).padStart(2, '0');
-  const date = `${now.getMonth() + 1}/${now.getDate()}/${now.getFullYear()}`;
-  document.querySelector('.timestamp-time').textContent = `${ampm} ${h}:${minutes}:${seconds}`;
-  document.querySelector('.timestamp-date').textContent = date;
-}
 
-updateTimestamp();
-setInterval(updateTimestamp, 1000);
+  function updateTimestamp() {
+    const now = new Date();
+    const hours = now.getHours();
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const h = String(hours % 12 || 12).padStart(2, '0');
+    const date = `${now.getMonth() + 1}/${now.getDate()}/${now.getFullYear()}`;
+    document.querySelector('.timestamp-time').textContent = `${ampm} ${h}:${minutes}:${seconds}`;
+    document.querySelector('.timestamp-date').textContent = date;
+  }
+
+  updateTimestamp();
+  setInterval(updateTimestamp, 1000);
 </script>
 </body>
 </html>
