@@ -326,3 +326,126 @@ nav a.active {
   from { opacity: 0; }
   to { opacity: 1; }
 }
+
+@media (max-width: 768px) {
+
+  /* hide desktop only elements */
+  .camera-frame-left,
+  .camera-frame-right,
+  .timestamp,
+  .battery,
+  .rec {
+    display: none;
+  }
+
+  /* content */
+  .content {
+    width: 100%;
+    top: 50%;
+    padding: 0 16px;
+  }
+
+  /* header */
+  .header {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+    width: 100%;
+  }
+
+  /* logo */
+  .logo {
+    width: 25%;
+  }
+
+  /* hide desktop nav */
+  nav {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,0.95);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    height: 100vh;
+    z-index: 200;
+    width: 100vw;
+    margin: 0;
+  }
+
+  nav.open {
+    display: flex;
+  }
+
+  nav a {
+    font-size: 8vw;
+  }
+
+  /* hamburger button */
+  .hamburger {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 300;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 8px;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: #fff;
+  }
+
+  /* gallery becomes vertical feed */
+  .gallery {
+    width: 100%;
+    flex-direction: column;
+    margin-top: 20px;
+    overflow-y: auto;
+    max-height: 70vh;
+  }
+
+  .gallery-viewport {
+    overflow: visible;
+    width: 100%;
+  }
+
+  .gallery-track {
+    flex-direction: column;
+    transform: none !important;
+  }
+
+  .gallery-page {
+    grid-template-columns: repeat(2, 1fr);
+    min-width: 100%;
+    gap: 8px;
+    padding: 0;
+  }
+
+  .gallery-item {
+    width: 100%;
+    margin: 0;
+  }
+
+  /* hide arrows */
+  .arrow {
+    display: none;
+  }
+
+  /* about section */
+  .about-section {
+    font-size: 5vw;
+    padding: 0 16px;
+  }
+}
