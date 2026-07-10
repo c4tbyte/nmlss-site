@@ -8,6 +8,12 @@
 </head>
 <body>
 
+<button class="hamburger" id="hamburger">
+  <span></span>
+  <span></span>
+  <span></span>
+</button>
+
   <header>
     <a href="index.html" class="logo">
       <img src="images/logo.gif" alt="NMLSS">
@@ -81,6 +87,17 @@
     e.stopPropagation();
     updateModal(currentModalIndex + 1);
   });
+  
+  const hamburger = document.getElementById('hamburger');
+hamburger.addEventListener('click', () => {
+  document.querySelector('nav').classList.toggle('open');
+});
+
+document.querySelectorAll('nav a').forEach(link => {
+  link.addEventListener('click', () => {
+    document.querySelector('nav').classList.remove('open');
+  });
+});
 </script>
 </body>
 </html>

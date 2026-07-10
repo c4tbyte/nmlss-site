@@ -337,6 +337,10 @@ nav a.active {
   .rec {
     display: none;
   }
+  
+  .splash img {
+  width: 70%;
+  }
 
   /* content */
   .content {
@@ -434,7 +438,7 @@ nav a.active {
   }
 
   .gallery-item {
-    width: 100%;
+    width: 80%;
     margin: 0;
   }
 
