@@ -119,3 +119,68 @@ nav a.active { opacity: 1; }
 }
 
 .modal-arrow:hover { opacity: 1; }
+
+@media (max-width: 768px) {
+
+  header {
+    position: relative;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+    top: auto;
+    left: auto;
+  }
+
+  .logo {
+    width: 60px;
+  }
+
+  nav {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.95);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    z-index: 200;
+  }
+
+  nav.open {
+    display: flex;
+  }
+
+  nav a {
+    font-size: 8vw;
+  }
+
+  .hamburger {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 300;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 8px;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: #fff;
+  }
+
+  .archive-grid {
+    columns: 2;
+    padding: 20px 16px;
+    max-width: 100%;
+  }
+
+}
