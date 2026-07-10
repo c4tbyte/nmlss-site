@@ -16,7 +16,7 @@ html, body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transform: scale(0.95);
+  object-position: center center;
   z-index: 0;
 }
 
@@ -64,7 +64,7 @@ html, body {
 }
 
 .logo img {
-  width: 100%;
+  width: 105%;
   filter: contrast(2.3) grayscale(100%) brightness(0.9);
 }
 
@@ -73,14 +73,14 @@ nav {
   gap: 40px;
   width: 100vw;
   justify-content: center;
-  margin-top: -15px;
+  margin-top: -10px;
   position: relative;
   z-index: 10;
 }
 
 nav a {
   font-family: 'VT323', monospace;
-  font-size: 1.4vw;
+  font-size: 1.5vw;
   color: #fff;
   min-width: 80px;
   text-align: center;
@@ -93,18 +93,27 @@ nav a {
   background-position: bottom center;
   background-size: 100% 8px;
   transition: background-image 0.2s;
+  text-shadow: 
+  -1px -1px 0 #000,
+   1px -1px 0 #000,
+  -1px  1px 0 #000,
+   1px  1px 0 #000;
 }
 
 nav a:hover {
   opacity: 0.6;
+}
+
+nav a.active {
   background-image: url('images/underline.png');
+  opacity: 0.6;
 }
 
 .gallery {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-top: -30px;
+  margin-top: -5px;
   width: 80%;
   flex: 1;
   min-height: 0;
@@ -129,11 +138,13 @@ nav a:hover {
 }
 
 .gallery-item {
-  width: 90%;
+  width: 95%;
   margin: 0 auto;
   aspect-ratio: 4/5;
   overflow: hidden;
-  filter: grayscale(30%) contrast(1.1) brightness(0.9);
+  filter: grayscale(50%) contrast(1.1) brightness(0.7);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.9), 0 0 30px rgba(0, 0, 0, 0.5);
+  border: 3px solid rgba(255, 255, 255, 0.15);
 }
 
 .gallery-item:hover {
@@ -166,19 +177,22 @@ nav a:hover {
 .view-more {
   font-family: 'VT323', monospace;
   font-size: 1.9vw;
-  color: red;
+  color: #fff;
   text-decoration: none;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   position: fixed;
-  bottom: -3%;
+  bottom: -6%;
   left: 50%;
   transform: translateX(-50%);
+  text-shadow: 
+  -1px -1px 0 #000,
+   1px -1px 0 #000,
+  -1px  1px 0 #000,
+   1px  1px 0 #000;
 }
 
-.view-more:hover {
-  opacity: 0.6;
-}
+.view-more:hover { opacity: 0.7; }
 
 .rec {
   position: fixed;
@@ -223,8 +237,14 @@ nav a:hover {
   position: fixed;
   bottom: 8%;
   left: 5.5%;
-  width: 3%;
+  width: 2%;
   pointer-events: none;
+  animation: blink 1.2s step-start infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
 .battery img {
