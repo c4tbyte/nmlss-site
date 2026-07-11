@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html, body {
@@ -14,8 +15,8 @@ header {
   z-index: 100;
   display: flex;
   flex-direction: column;
-  gap: 10px;
   align-items: center;
+  gap: 10px;
 }
 
 .logo {
@@ -31,8 +32,8 @@ header {
 nav {
   display: flex;
   flex-direction: column;
-  gap: 5px;
   align-items: center;
+  gap: 5px;
 }
 
 nav a {
@@ -46,13 +47,13 @@ nav a {
   padding-bottom: 4px;
 }
 
-nav a:hover { opacity: 1; }
+nav a:hover,
 nav a.active { opacity: 1; }
 
 .archive-grid {
   columns: 4;
   column-gap: 8px;
-  padding: 20px 40px 40px 40px;
+  padding: 20px 40px 40px;
   margin-left: 280px;
 }
 
@@ -75,11 +76,22 @@ nav a.active { opacity: 1; }
   transform: scale(1.02);
 }
 
+.about-section {
+  display: none;
+  font-family: 'VT323', monospace;
+  font-size: 24px;
+  letter-spacing: 0.1em;
+  line-height: 1.8;
+  text-align: center;
+  margin-top: 200px;
+  margin-left: 200px;
+}
+
 .modal {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0,0,0,0.4);
   backdrop-filter: blur(8px);
   z-index: 1000;
   align-items: center;
@@ -119,21 +131,20 @@ nav a.active { opacity: 1; }
 
 .modal-arrow:hover { opacity: 1; }
 
+.hamburger { display: none; }
+
 @media (max-width: 768px) {
 
   header {
     position: relative;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding: 16px;
     top: auto;
     left: auto;
+    flex-direction: row;
+    justify-content: center;
+    padding: 16px;
   }
 
-  .logo {
-    width: 60px;
-  }
+  .logo { width: 60px; }
 
   nav {
     display: none;
@@ -147,15 +158,12 @@ nav a.active { opacity: 1; }
     z-index: 200;
   }
 
-  nav.open {
-    display: flex;
-  }
+  nav.open { display: flex; }
 
-  nav a {
-    font-size: 8vw;
-  }
+  nav a { font-size: 8vw; }
 
   .hamburger {
+    display: flex;
     position: fixed;
     top: 16px;
     right: 16px;
@@ -163,7 +171,6 @@ nav a.active { opacity: 1; }
     background: none;
     border: none;
     cursor: pointer;
-    display: flex;
     flex-direction: column;
     gap: 5px;
     padding: 8px;
@@ -179,7 +186,7 @@ nav a.active { opacity: 1; }
   .archive-grid {
     columns: 2;
     padding: 20px 16px;
-    max-width: 100%;
+    margin-left: 0;
   }
 
 }

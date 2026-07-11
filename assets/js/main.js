@@ -5,10 +5,10 @@ if (sessionStorage.getItem('visited')) {
 } else {
     sessionStorage.setItem('visited', 'true');
 }
+
 const cloudName = 'ycvrsako';
 const folder = 'featured';
 let page = 0;
-let totalPages = 0;
 let allImages = [];
 let currentModalIndex = 0;
 
@@ -20,6 +20,7 @@ fetch(`https://res.cloudinary.com/${cloudName}/image/list/${folder}.json`)
     a.public_id.localeCompare(b.public_id, undefined, { numeric: true })
     );
     const perPage = 10;
+    const totalPages = Math.ceil(images.length / perPage);
 
     for (let i = 0; i < images.length; i += perPage) {
         const galleryPage = document.createElement('div');
@@ -34,8 +35,6 @@ fetch(`https://res.cloudinary.com/${cloudName}/image/list/${folder}.json`)
         });
         track.appendChild(galleryPage);
     }
-
-    totalPages = Math.ceil(images.length / perPage);
 
     document.querySelector('.arrow.left').addEventListener('click', () => {
         if (page > 0) page--;
@@ -87,19 +86,18 @@ document.querySelectorAll('nav a').forEach(link => {
     link.addEventListener('click', (e) => {
         const section = link.textContent.toLowerCase();
 
+        document.querySelector('nav').classList.remove('open');
+
         if (section === 'archive') return;
 
         e.preventDefault();
         document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
         link.classList.add('active');
         Object.values(sections).forEach(s => s.style.display = 'none');
-        if (section === 'home') {
-            sections.home.style.display = 'flex';
-        } else if (section === 'about') {
-            sections.about.style.display = 'block';
-        } else if (section === 'shop') {
-            sections.shop.style.display = 'block';
-        }
+
+        if (section === 'home') sections.home.style.display = 'flex';
+        else if (section === 'about') sections.about.style.display = 'block';
+        else if (section === 'shop') sections.shop.style.display = 'block';
     });
 });
 
@@ -134,13 +132,6 @@ document.getElementById('modalNext').addEventListener('click', (e) => {
     updateModal(currentModalIndex + 1);
 });
 
-const hamburger = document.getElementById('hamburger');
-hamburger.addEventListener('click', () => {
+document.getElementById('hamburger').addEventListener('click', () => {
     document.querySelector('nav').classList.toggle('open');
-});
-
-document.querySelectorAll('nav a').forEach(link => {
-    link.addEventListener('click', () => {
-        document.querySelector('nav').classList.remove('open');
-    });
 });
