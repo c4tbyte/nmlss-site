@@ -11,6 +11,7 @@ html, body {
   min-width: 1200px;
 }
 
+/* ── BACKGROUND ── */
 .bg {
   position: fixed;
   inset: 0;
@@ -21,6 +22,7 @@ html, body {
   filter: brightness(0.5) contrast(0.9);
 }
 
+/* ── CAMERA FRAMES ── */
 .camera-frame-left,
 .camera-frame-right {
   position: fixed;
@@ -42,6 +44,7 @@ html, body {
   filter: brightness(0.6);
 }
 
+/* ── CONTENT ── */
 .content {
   position: fixed;
   top: 45%;
@@ -74,6 +77,7 @@ html, body {
   filter: contrast(2.3) grayscale(100%) brightness(0.9);
 }
 
+/* ── NAV ── */
 nav {
   display: flex;
   gap: 40px;
@@ -99,11 +103,7 @@ nav a {
   background-position: bottom center;
   background-size: 100% 8px;
   transition: background-image 0.2s;
-  text-shadow:
-  -1px -1px 0 #000,
-  1px -1px 0 #000,
-  -1px  1px 0 #000,
-  1px  1px 0 #000;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
 
 nav a:hover { opacity: 0.6; }
@@ -113,6 +113,7 @@ nav a.active {
   opacity: 0.6;
 }
 
+/* ── GALLERY ── */
 .gallery {
   display: flex;
   align-items: center;
@@ -177,6 +178,7 @@ nav a.active {
 
 .arrow:hover { opacity: 1; }
 
+/* ── HUD ELEMENTS ── */
 .rec {
   position: fixed;
   top: 8%;
@@ -228,11 +230,6 @@ nav a.active {
   z-index: 2;
 }
 
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
-}
-
 .battery img { width: 150%; }
 
 .social-links {
@@ -251,10 +248,9 @@ nav a.active {
   transition: opacity 0.2s;
 }
 
-.social-links a:hover img {
-  opacity: 1;
-}
+.social-links a:hover img { opacity: 1; }
 
+/* ── SECTIONS ── */
 .about-section {
   display: none;
   color: #fff;
@@ -267,7 +263,76 @@ nav a.active {
   margin-top: 70px;
 }
 
-.modal {
+/* ── SHOP ── */
+.shop-section {
+  display: none;
+  padding: 20px;
+  overflow-y: auto;
+  max-height: 70vh;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-top: 20px;
+}
+.shop-section.active { display: flex; }
+
+.shop-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.shop-card {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 200px;
+}
+
+.shop-card img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  filter: grayscale(30%) contrast(1.1) brightness(0.9);
+  transition: filter 0.3s, transform 0.3s;
+}
+
+.shop-card:hover img {
+  filter: grayscale(0%) contrast(1.1) brightness(1);
+  transform: scale(1.02);
+}
+
+.shop-card-title {
+  font-family: 'VT323', monospace;
+  font-size: 1.2vw;
+  color: #fff;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.shop-card-price {
+  font-family: 'VT323', monospace;
+  font-size: 1vw;
+  color: #fff;
+  opacity: 0.7;
+}
+
+.shop-empty {
+  font-family: 'VT323', monospace;
+  font-size: 3vw;
+  color: #fff;
+  letter-spacing: 0.15em;
+  text-align: center;
+  margin-top: 100px;
+  grid-column: 1 / -1;
+  width: 100%;
+}
+
+/* ── MODALS ── */
+.modal,
+.shop-modal {
   display: none;
   position: fixed;
   inset: 0;
@@ -278,7 +343,8 @@ nav a.active {
   justify-content: center;
 }
 
-.modal.active { display: flex; }
+.modal.active,
+.shop-modal.active { display: flex; }
 
 .modal-img {
   max-width: 70%;
@@ -311,6 +377,77 @@ nav a.active {
 
 .modal-arrow:hover { opacity: 1; }
 
+.shop-modal-inner {
+  display: flex;
+  gap: 30px;
+  max-width: 800px;
+  width: 80%;
+}
+
+.shop-modal-img {
+  width: 45%;
+  object-fit: cover;
+  aspect-ratio: 1/1;
+}
+
+.shop-modal-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  justify-content: center;
+}
+
+.shop-modal-title {
+  font-family: 'VT323', monospace;
+  font-size: 2vw;
+  color: #fff;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.shop-modal-price {
+  font-family: 'VT323', monospace;
+  font-size: 1.5vw;
+  color: #fff;
+  opacity: 0.7;
+}
+
+.shop-modal-desc {
+  font-family: 'VT323', monospace;
+  font-size: 1.2vw;
+  color: #fff;
+  opacity: 0.6;
+  line-height: 1.6;
+}
+
+.shop-modal-select {
+  background: #000;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.3);
+  padding: 6px 10px;
+  font-family: 'VT323', monospace;
+  font-size: 1.2vw;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+}
+
+.shop-modal-btn {
+  display: inline-block;
+  font-family: 'VT323', monospace;
+  font-size: 1.2vw;
+  color: #fff;
+  text-decoration: none;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border: 1px solid rgba(255,255,255,0.5);
+  padding: 8px 20px;
+  text-align: center;
+  transition: opacity 0.2s;
+}
+
+.shop-modal-btn:hover { opacity: 0.6; }
+
+/* ── SPLASH ── */
 .splash {
   position: fixed;
   inset: 0;
@@ -329,6 +466,7 @@ nav a.active {
   animation: splashShrink 1s ease 4s forwards;
 }
 
+/* ── ANIMATIONS ── */
 @keyframes splashShrink {
   from { width: 25%; }
   to { width: 0%; opacity: 0; }
@@ -343,27 +481,26 @@ nav a.active {
   to { opacity: 1; }
 }
 
-.hamburger {
-  display: none;
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
+/* ── HAMBURGER ── */
+.hamburger { display: none; }
+
+/* ── MOBILE ── */
 @media (max-width: 768px) {
 
-  html, body {
-    overflow-y: auto;
-  }
+  html, body { overflow-y: auto; }
 
   .camera-frame-left,
   .camera-frame-right,
   .timestamp,
   .battery,
-  .rec {
-    display: none;
-  }
+  .rec { display: none; }
 
-  .splash img {
-    width: 70%;
-  }
+  .splash img { width: 70%; }
 
   .content {
     position: relative;
@@ -372,8 +509,7 @@ nav a.active {
     transform: none;
     width: 100%;
     height: auto;
-    padding: 0 16px;
-    padding-top: 20px;
+    padding: 16px 16px 0;
   }
 
   .header {
@@ -384,16 +520,12 @@ nav a.active {
     width: 100%;
   }
 
-  .logo {
-    width: 40%;
-  }
+  .logo { width: 40%; }
 
   nav {
     display: none;
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
+    inset: 0;
     background: rgba(0,0,0,0.95);
     flex-direction: column;
     align-items: center;
@@ -439,10 +571,7 @@ nav a.active {
     flex: none;
   }
 
-  .gallery-viewport {
-    overflow: visible;
-    width: 100%;
-  }
+  .gallery-viewport { overflow: visible; width: 100%; }
 
   .gallery-track {
     flex-direction: column;
@@ -456,10 +585,7 @@ nav a.active {
     padding: 0;
   }
 
-  .gallery-item {
-    width: 100%;
-    margin: 0;
-  }
+  .gallery-item { width: 100%; margin: 0; }
 
   .arrow { display: none; }
 
@@ -468,4 +594,3 @@ nav a.active {
     padding: 0 16px;
   }
 }
-

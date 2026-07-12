@@ -1,12 +1,16 @@
 const cloudName = 'ycvrsako';
+const shopSlug = 'officiallynmlssentity';
 const tag = 'archive';
 let allImages = [];
 let currentModalIndex = 0;
 
 const archiveGrid = document.getElementById('archiveGrid');
 const aboutSection = document.getElementById('aboutSection');
+const shopSection = document.getElementById('shopSection');
 const modal = document.getElementById('modal');
+const shopModal = document.getElementById('shopModal');
 
+// archive images
 fetch(`https://res.cloudinary.com/${cloudName}/image/list/${tag}.json`)
 .then(res => res.json())
 .then(data => {
@@ -22,6 +26,7 @@ fetch(`https://res.cloudinary.com/${cloudName}/image/list/${tag}.json`)
     });
 });
 
+// image modal
 function openModal(src) {
     currentModalIndex = allImages.indexOf(src);
     document.getElementById('modalImg').src = src;
@@ -49,6 +54,68 @@ document.getElementById('modalNext').addEventListener('click', (e) => {
     updateModal(currentModalIndex + 1);
 });
 
+// shop
+function loadShop() {
+    const grid = document.getElementById('shopGrid');
+    if (grid.children.length > 0) return;
+
+    fetch(`https://api.bigcartel.com/${shopSlug}/products.json`)
+    .then(res => res.json())
+    .then(products => {
+        if (products.length === 0) {
+            grid.innerHTML = '<p class="shop-empty">COMING SOON...</p>';
+            return;
+        }
+        products.forEach(product => {
+            const img = product.images[0]?.secure_url || '';
+            const price = `$${parseFloat(product.price).toFixed(2)}`;
+            grid.innerHTML += `
+            <div class="shop-card" onclick="openShopModal(${product.id})">
+            <img src="${img}" alt="${product.name}">
+            <p class="shop-card-title">${product.name}</p>
+            <p class="shop-card-price">${price}</p>
+            </div>`;
+        });
+        window.shopProducts = products;
+    });
+}
+
+function openShopModal(id) {
+    const product = window.shopProducts.find(p => p.id === id);
+    if (!product) return;
+
+    document.getElementById('shopModalImg').src = product.images[0]?.secure_url || '';
+    document.getElementById('shopModalTitle').textContent = product.name;
+    document.getElementById('shopModalPrice').textContent = `$${parseFloat(product.price).toFixed(2)}`;
+    document.getElementById('shopModalDesc').innerHTML = product.description;
+
+    const select = document.getElementById('shopModalSelect');
+    select.innerHTML = '';
+    if (product.options.length > 1) {
+        product.options.forEach(opt => {
+            select.innerHTML += `<option value="${opt.id}">${opt.name}</option>`;
+        });
+        select.style.display = 'block';
+    } else {
+        select.style.display = 'none';
+    }
+
+    document.getElementById('shopModalBtn').href = `https://${shopSlug}.bigcartel.com/cart/add?id=${product.options[0].id}`;
+
+    select.addEventListener('change', () => {
+        document.getElementById('shopModalBtn').href = `https://${shopSlug}.bigcartel.com/cart/add?id=${select.value}`;
+    });
+
+    shopModal.classList.add('active');
+}
+
+document.getElementById('shopModalClose').addEventListener('click', () => shopModal.classList.remove('active'));
+
+shopModal.addEventListener('click', (e) => {
+    if (e.target === shopModal) shopModal.classList.remove('active');
+});
+
+// nav
 document.getElementById('hamburger').addEventListener('click', () => {
     document.querySelector('nav').classList.toggle('open');
 });
@@ -62,10 +129,18 @@ document.querySelectorAll('nav a').forEach(link => {
             e.preventDefault();
             archiveGrid.style.display = 'block';
             aboutSection.style.display = 'none';
+            shopSection.style.display = 'none';
         } else if (section === 'about') {
             e.preventDefault();
             archiveGrid.style.display = 'none';
             aboutSection.style.display = 'block';
+            shopSection.style.display = 'none';
+        } else if (section === 'shop') {
+            e.preventDefault();
+            archiveGrid.style.display = 'none';
+            aboutSection.style.display = 'none';
+            shopSection.style.display = 'flex';
+            loadShop();
         }
 
         document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));

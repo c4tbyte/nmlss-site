@@ -133,6 +133,154 @@ nav a.active { opacity: 1; }
 
 .hamburger { display: none; }
 
+.shop-section {
+  display: none;
+  width: 100%;
+  padding: 40px 40px 40px 320px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.shop-section.active { display: flex; }
+
+.shop-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.shop-card {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.shop-card img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  filter: grayscale(30%) contrast(1.1) brightness(0.9);
+  transition: filter 0.3s, transform 0.3s;
+}
+
+.shop-card:hover img {
+  filter: grayscale(0%) contrast(1.1) brightness(1);
+  transform: scale(1.02);
+}
+
+.shop-card-title {
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+  color: #fff;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.shop-card-price {
+  font-family: 'VT323', monospace;
+  font-size: 16px;
+  color: #fff;
+  opacity: 0.7;
+}
+
+.shop-empty {
+  font-family: 'VT323', monospace;
+  font-size: 32px;
+  color: #fff;
+  letter-spacing: 0.15em;
+  text-align: center;
+  margin-top: 100px;
+  grid-column: 1 / -1;
+  width: 100%;
+}
+
+.shop-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+
+.shop-modal.active { display: flex; }
+
+.shop-modal-inner {
+  display: flex;
+  gap: 30px;
+  max-width: 800px;
+  width: 80%;
+}
+
+.shop-modal-img {
+  width: 45%;
+  object-fit: cover;
+  aspect-ratio: 1/1;
+}
+
+.shop-modal-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  justify-content: center;
+}
+
+.shop-modal-title {
+  font-family: 'VT323', monospace;
+  font-size: 32px;
+  color: #fff;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.shop-modal-price {
+  font-family: 'VT323', monospace;
+  font-size: 24px;
+  color: #fff;
+  opacity: 0.7;
+}
+
+.shop-modal-desc {
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+  color: #fff;
+  opacity: 0.6;
+  line-height: 1.6;
+}
+
+.shop-modal-select {
+  background: #000;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.3);
+  padding: 6px 10px;
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+}
+
+.shop-modal-btn {
+  display: inline-block;
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+  color: #fff;
+  text-decoration: none;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border: 1px solid rgba(255,255,255,0.5);
+  padding: 8px 20px;
+  text-align: center;
+  transition: opacity 0.2s;
+}
+
+.shop-modal-btn:hover { opacity: 0.6; }
+
 @media (max-width: 768px) {
 
   header {

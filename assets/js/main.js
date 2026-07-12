@@ -7,11 +7,16 @@ if (sessionStorage.getItem('visited')) {
 }
 
 const cloudName = 'ycvrsako';
+const shopSlug = 'officiallynmlssentity';
 const folder = 'featured';
 let page = 0;
 let allImages = [];
 let currentModalIndex = 0;
 
+const modal = document.getElementById('modal');
+const shopModal = document.getElementById('shopModal');
+
+// gallery
 fetch(`https://res.cloudinary.com/${cloudName}/image/list/${folder}.json`)
 .then(res => res.json())
 .then(data => {
@@ -47,6 +52,7 @@ fetch(`https://res.cloudinary.com/${cloudName}/image/list/${folder}.json`)
     });
 });
 
+// rec blink
 const words = ['REC', 'DEATH', 'VOID', 'DECAY', 'ROT', 'PAIN', 'DARK', 'FEAR', 'SORROW', 'ANGUISH', 'MOURN', 'SUFFER'];
 let i = 0;
 let blinks = 0;
@@ -62,6 +68,7 @@ setInterval(() => {
     }
 }, 600);
 
+// timestamp
 function updateTimestamp() {
     const now = new Date();
     const hours = now.getHours();
@@ -76,6 +83,68 @@ function updateTimestamp() {
 updateTimestamp();
 setInterval(updateTimestamp, 1000);
 
+// shop
+function loadShop() {
+    const grid = document.getElementById('shopGrid');
+    if (grid.children.length > 0) return;
+
+    fetch(`https://api.bigcartel.com/${shopSlug}/products.json`)
+    .then(res => res.json())
+    .then(products => {
+        if (products.length === 0) {
+            grid.innerHTML = '<p class="shop-empty">COMING SOON...</p>';
+            return;
+        }
+        products.forEach(product => {
+            const img = product.images[0]?.secure_url || '';
+            const price = `$${parseFloat(product.price).toFixed(2)}`;
+            grid.innerHTML += `
+            <div class="shop-card" onclick="openShopModal(${product.id})">
+            <img src="${img}" alt="${product.name}">
+            <p class="shop-card-title">${product.name}</p>
+            <p class="shop-card-price">${price}</p>
+            </div>`;
+        });
+        window.shopProducts = products;
+    });
+}
+
+function openShopModal(id) {
+    const product = window.shopProducts.find(p => p.id === id);
+    if (!product) return;
+
+    document.getElementById('shopModalImg').src = product.images[0]?.secure_url || '';
+    document.getElementById('shopModalTitle').textContent = product.name;
+    document.getElementById('shopModalPrice').textContent = `$${parseFloat(product.price).toFixed(2)}`;
+    document.getElementById('shopModalDesc').innerHTML = product.description;
+
+    const select = document.getElementById('shopModalSelect');
+    select.innerHTML = '';
+    if (product.options.length > 1) {
+        product.options.forEach(opt => {
+            select.innerHTML += `<option value="${opt.id}">${opt.name}</option>`;
+        });
+        select.style.display = 'block';
+    } else {
+        select.style.display = 'none';
+    }
+
+    document.getElementById('shopModalBtn').href = `https://${shopSlug}.bigcartel.com${product.url}`;
+
+    select.addEventListener('change', () => {
+        document.getElementById('shopModalBtn').href = `https://${shopSlug}.bigcartel.com/cart/add?id=${select.value}`;
+    });
+
+    shopModal.classList.add('active');
+}
+
+document.getElementById('shopModalClose').addEventListener('click', () => shopModal.classList.remove('active'));
+
+shopModal.addEventListener('click', (e) => {
+    if (e.target === shopModal) shopModal.classList.remove('active');
+});
+
+// nav
 const sections = {
     home: document.querySelector('.gallery'),
     about: document.getElementById('aboutSection'),
@@ -85,7 +154,6 @@ const sections = {
 document.querySelectorAll('nav a').forEach(link => {
     link.addEventListener('click', (e) => {
         const section = link.textContent.toLowerCase();
-
         document.querySelector('nav').classList.remove('open');
 
         if (section === 'archive') return;
@@ -97,14 +165,18 @@ document.querySelectorAll('nav a').forEach(link => {
 
         if (section === 'home') sections.home.style.display = 'flex';
         else if (section === 'about') sections.about.style.display = 'block';
-        else if (section === 'shop') sections.shop.style.display = 'block';
+        else if (section === 'shop') {
+            sections.shop.style.display = 'flex';
+            loadShop();
+        }
     });
 });
 
+// gallery modal
 function openModal(src) {
     currentModalIndex = allImages.indexOf(src);
     document.getElementById('modalImg').src = src;
-    document.getElementById('modal').classList.add('active');
+    modal.classList.add('active');
 }
 
 function updateModal(index) {
@@ -112,14 +184,10 @@ function updateModal(index) {
     document.getElementById('modalImg').src = allImages[currentModalIndex];
 }
 
-document.getElementById('modalClose').addEventListener('click', () => {
-    document.getElementById('modal').classList.remove('active');
-});
+document.getElementById('modalClose').addEventListener('click', () => modal.classList.remove('active'));
 
-document.getElementById('modal').addEventListener('click', (e) => {
-    if (e.target === document.getElementById('modal')) {
-        document.getElementById('modal').classList.remove('active');
-    }
+modal.addEventListener('click', (e) => {
+    if (e.target === modal) modal.classList.remove('active');
 });
 
 document.getElementById('modalPrev').addEventListener('click', (e) => {
@@ -132,6 +200,7 @@ document.getElementById('modalNext').addEventListener('click', (e) => {
     updateModal(currentModalIndex + 1);
 });
 
+// hamburger
 document.getElementById('hamburger').addEventListener('click', () => {
     document.querySelector('nav').classList.toggle('open');
 });
