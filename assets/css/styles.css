@@ -492,7 +492,10 @@ nav a.active {
 /* ── MOBILE ── */
 @media (max-width: 768px) {
 
-  html, body { overflow-y: auto; }
+  html, body {
+    overflow: hidden;
+    min-width: unset;
+  }
 
   .camera-frame-left,
   .camera-frame-right,
@@ -566,8 +569,8 @@ nav a.active {
     width: 100%;
     flex-direction: column;
     margin-top: 20px;
-    overflow-y: visible;
-    max-height: none;
+    overflow: hidden;
+    max-height: 60vh;
     flex: none;
   }
 
@@ -583,6 +586,7 @@ nav a.active {
     min-width: 100%;
     gap: 8px;
     padding: 0;
+    overflow: hidden;
   }
 
   .gallery-item { width: 100%; margin: 0; }
@@ -592,5 +596,13 @@ nav a.active {
   .about-section {
     font-size: 5vw;
     padding: 0 16px;
+  }
+
+  .shop-card-title {
+    font-size: 4vw;
+  }
+
+  .shop-card-price {
+    font-size: 3.5vw;
   }
 }
