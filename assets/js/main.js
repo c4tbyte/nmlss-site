@@ -1,9 +1,36 @@
-if (sessionStorage.getItem('visited')) {
-    document.getElementById('splash').style.display = 'none';
-    document.querySelector('.content').style.animation = 'none';
-    document.querySelector('.content').style.opacity = '1';
-} else {
+const splash = document.getElementById('splash');
+const audio = document.getElementById('bgAudio');
+
+splash.addEventListener('click', () => {
+    audio.volume = 0;
+    audio.play();
+
+    let vol = 0;
+    const fadeIn = setInterval(() => {
+        vol += 0.001;
+        if (vol >= 0.12) {
+            audio.volume = 0.12;
+            clearInterval(fadeIn);
+        } else {
+            audio.volume = vol;
+        }
+    }, 100);
+
+    document.getElementById('splashText').style.display = 'none';
+    document.getElementById('splashLogo').style.animation = 'splashShrink 1s ease forwards';
+
+    setTimeout(() => {
+        splash.style.display = 'none';
+        document.querySelector('.content').style.animation = 'none';
+        document.querySelector('.content').style.opacity = '1';
+    }, 1000);
+
     sessionStorage.setItem('visited', 'true');
+});
+
+if (sessionStorage.getItem('visited')) {
+    splash.style.display = 'none';
+    document.querySelector('.content').classList.add('visible');
 }
 
 const cloudName = 'ycvrsako';
@@ -204,3 +231,24 @@ document.getElementById('modalNext').addEventListener('click', (e) => {
 document.getElementById('hamburger').addEventListener('click', () => {
     document.querySelector('nav').classList.toggle('open');
 });
+
+// noise
+const canvas = document.getElementById('noise');
+const ctx = canvas.getContext('2d');
+
+function generateNoise() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const imageData = ctx.createImageData(canvas.width, canvas.height);
+    for (let i = 0; i < imageData.data.length; i += 4) {
+        const val = Math.random() * 255;
+        imageData.data[i] = val;
+        imageData.data[i+1] = val;
+        imageData.data[i+2] = val;
+        imageData.data[i+3] = 255;
+    }
+    ctx.putImageData(imageData, 0, 0);
+    requestAnimationFrame(generateNoise);
+}
+
+generateNoise();
