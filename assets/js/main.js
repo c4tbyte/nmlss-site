@@ -2,7 +2,7 @@ const splash = document.getElementById('splash');
 const audio = document.getElementById('bgAudio');
 
 splash.addEventListener('click', () => {
-    audio.volume = 0;
+    audio.volume = 0.0001;
     audio.play();
 
     let vol = 0;
@@ -32,6 +32,14 @@ if (sessionStorage.getItem('visited')) {
     splash.style.display = 'none';
     document.querySelector('.content').classList.add('visible');
 }
+
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+        audio.pause();
+    } else {
+        audio.play();
+    }
+});
 
 const cloudName = 'ycvrsako';
 const shopSlug = 'officiallynmlssentity';
