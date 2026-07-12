@@ -567,10 +567,10 @@ nav a.active {
 
   .gallery {
     width: 100%;
-    overflow-y: auto;
     flex-direction: column;
     margin-top: 20px;
-    max-height: 75vh;
+    overflow-y: auto;
+    max-height: 55vh;
     flex: none;
   }
 
