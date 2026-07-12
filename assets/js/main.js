@@ -41,7 +41,7 @@ document.addEventListener('visibilitychange', () => {
     }
 });
 
-const cloudName = 'ycvrsako';
+const cloudName = 'wffj720s';
 const shopSlug = 'officiallynmlssentity';
 const folder = 'featured';
 let page = 0;

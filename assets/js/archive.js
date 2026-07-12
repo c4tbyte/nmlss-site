@@ -1,4 +1,4 @@
-const cloudName = 'ycvrsako';
+const cloudName = 'wffj720s';
 const shopSlug = 'officiallynmlssentity';
 const tag = 'archive';
 let allImages = [];
