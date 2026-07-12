@@ -570,7 +570,6 @@ nav a.active {
     overflow-y: auto;
     flex-direction: column;
     margin-top: 20px;
-    overflow: hidden;
     max-height: 75vh;
     flex: none;
   }
